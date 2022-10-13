@@ -3,7 +3,7 @@
 /*.xml
 ../Warehouse/_gams*.gdx
 ../Warehouse/*.pf
-../Warehouse/*.lst
+../Warehouse/
 ../GamsJava.iml
 ./libraries
 ./codeStyles
