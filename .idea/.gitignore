@@ -7,4 +7,5 @@
 /*.pf
 /*.iml
 .idea
-libraries
+./libraries
+./codeStyles
