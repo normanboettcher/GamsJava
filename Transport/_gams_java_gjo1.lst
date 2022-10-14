@@ -1,0 +1,243 @@
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 21:29:30 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  sets
+   2  i   canning plants
+   3  j   markets
+   4  ;
+   5   
+   6  Parameters
+   7  a(i)    capacity of plant i in cases
+   8  b(j)    demand at market j in cases
+   9  d(i,j)  distance in thousand miles;
+  10   
+  11  Scalar f    freight in dollars per thousand miles;
+  12   
+  13  **if (not set gdxincname), abort 'no include file name for data file provided';
+  14   
+  15   
+GDXIN   /home/norman/Schreibtisch/GAMS/GamsJava/Transport/_gams_java_gdb1.gdx
+--- LOAD  i = 1:i
+--- LOAD  j = 2:j
+--- LOAD  a = 4:a
+--- LOAD  b = 3:b
+--- LOAD  d = 5:d
+--- LOAD  f = 6:f
+  19   
+  20  Parameter c(i,j)    transport cost in thousand of dollars per case ;
+  21  c(i,j) = f * d(i,j) / 1000;
+  22   
+  23  Variables
+  24  x(i,j)  shipment quantities in cases
+  25  z   total transportation costs in thousand of dollars
+  26  ;
+  27   
+  28  Positive Variable
+  29  x;
+  30   
+  31  Equations
+  32  cost    define objective function
+  33  supply(i)   observe supply limit at plant i
+  34  demand(j)   satisfy demand at market j;
+  35   
+  36  cost.. z=E=sum((i,j), c(i,j)*x(i,j));
+  37  supply(i).. sum(j, x(i,j)) =L= a(i);
+  38  demand(j).. sum(i, x(i,j)) =G= b(j);
+  39   
+  40  model transport /all/;
+  41  solve transport using lp minimizing z;
+  42  display x.l, x.m;
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 21:29:30 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  /home/norman/Schreibtisch/GAMS/GamsJava/models/Transport.gms
+     2       16 GDXIN          1      16  /home/norman/Schreibtisch/GAMS/GamsJava/Transport/_gams_java_gdb1.gdx
+
+
+COMPILATION TIME     =        0.002 SECONDS      3 MB  40.3.0 f227c22a LEX-LEG
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 21:29:30 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE transport Using LP From line 41
+
+
+---- cost  =E=  define objective function
+
+cost..  - 0.225*x(Seattle,New-York) - 0.153*x(Seattle,Chicago) - 0.162*x(Seattle,Topeka) - 0.225*x(San-Diego,New-York) - 0.162*x(San-Diego,Chicago) - 0.126*x(San-Diego,Topeka) + z =E= 0 ; (LHS = 0)
+     
+
+---- supply  =L=  observe supply limit at plant i
+
+supply(Seattle)..  x(Seattle,New-York) + x(Seattle,Chicago) + x(Seattle,Topeka) =L= 325 ; (LHS = 0)
+     
+supply(San-Diego)..  x(San-Diego,New-York) + x(San-Diego,Chicago) + x(San-Diego,Topeka) =L= 600 ; (LHS = 0)
+     
+
+---- demand  =G=  satisfy demand at market j
+
+demand(New-York)..  x(Seattle,New-York) + x(San-Diego,New-York) =G= 325 ; (LHS = 0, INFES = 325 ****)
+     
+demand(Chicago)..  x(Seattle,Chicago) + x(San-Diego,Chicago) =G= 300 ; (LHS = 0, INFES = 300 ****)
+     
+demand(Topeka)..  x(Seattle,Topeka) + x(San-Diego,Topeka) =G= 275 ; (LHS = 0, INFES = 275 ****)
+     
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 21:29:30 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE transport Using LP From line 41
+
+
+---- x  shipment quantities in cases
+
+x(Seattle,New-York)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -0.225   cost
+        1       supply(Seattle)
+        1       demand(New-York)
+
+x(Seattle,Chicago)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -0.153   cost
+        1       supply(Seattle)
+        1       demand(Chicago)
+
+x(Seattle,Topeka)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -0.162   cost
+        1       supply(Seattle)
+        1       demand(Topeka)
+
+REMAINING 3 ENTRIES SKIPPED
+
+---- z  total transportation costs in thousand of dollars
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       cost
+
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 21:29:30 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE transport Using LP From line 41
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            6
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            7
+NON ZERO ELEMENTS            19
+
+
+GENERATION TIME      =        0.004 SECONDS      4 MB  40.3.0 f227c22a LEX-LEG
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 21:29:30 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE transport Using LP From line 41
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   transport           OBJECTIVE  z
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  41
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              153.6750
+
+ RESOURCE USAGE, LIMIT          0.015 10000000000.000
+ ITERATION COUNT, LIMIT         4    2147483647
+--- GAMS/Cplex licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.0.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+
+Optimal solution found
+Objective:          153.675000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU cost                .              .              .             1.0000      
+
+  cost  define objective function
+
+---- EQU supply  observe supply limit at plant i
+
+                 LOWER          LEVEL          UPPER         MARGINAL
+
+Seattle          -INF          325.0000       325.0000         EPS         
+San-Diego        -INF          575.0000       600.0000          .          
+
+---- EQU demand  satisfy demand at market j
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+New-York       325.0000       325.0000        +INF            0.2250      
+Chicago        300.0000       300.0000        +INF            0.1530      
+Topeka         275.0000       275.0000        +INF            0.1260      
+
+---- VAR x  shipment quantities in cases
+
+                          LOWER          LEVEL          UPPER         MARGINAL
+
+Seattle  .New-York          .            25.0000        +INF             .          
+Seattle  .Chicago           .           300.0000        +INF             .          
+Seattle  .Topeka            .              .            +INF            0.0360      
+San-Diego.New-York          .           300.0000        +INF             .          
+San-Diego.Chicago           .              .            +INF            0.0090      
+San-Diego.Topeka            .           275.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF          153.6750        +INF             .          
+
+  z  total transportation costs in thousand of dollars
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 21:29:30 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     42 VARIABLE x.L  shipment quantities in cases
+
+             New-York     Chicago      Topeka
+
+Seattle        25.000     300.000
+San-Diego     300.000                 275.000
+
+
+----     42 VARIABLE x.M  shipment quantities in cases
+
+              Chicago      Topeka
+
+Seattle                     0.036
+San-Diego       0.009
+
+
+
+EXECUTION TIME       =        0.037 SECONDS      4 MB  40.3.0 f227c22a LEX-LEG
+
+
+USER: Course License                                 S220923|0002AO-GEN
+      Stiftung Uni Hildesheim, Betriebswirtschaft WirtschaftsinfDCE2400
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      /home/norman/Schreibtisch/GAMS/GamsJava/models/Transport.gms
+Output     /home/norman/Schreibtisch/GAMS/GamsJava/Transport/_gams_java_gjo1.lst

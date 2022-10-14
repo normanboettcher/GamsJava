@@ -1,0 +1,12 @@
+LP=cplex
+MIP=cplex
+RMIP=cplex
+QCP=cplex
+MIQCP=cplex
+RMIQCP=cplex
+Input=/home/norman/Schreibtisch/GAMS/GamsJava/./models/LinearProgramming.gms
+Output=_gams_java_gjo1.lst
+CurDir=/home/norman/Schreibtisch/GAMS/GamsJava/LinearProgramming/Example1
+LogOption=0
+LogFile=_gams_java_gjo1.log
+GDX=_gams_java_gdb2.gdx

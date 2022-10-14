@@ -1,0 +1,161 @@
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 20:09:06 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  *defining variables*
+   2   
+   3  Variable
+   4  z   objective variable
+   5  ;
+   6  positive Variables
+   7  x1  deluxe belts
+   8  x2  regular belts
+   9  ;
+  10   
+  11  *define equations
+  12  Equations Objective, Const1, Const2;
+  13   
+  14   
+  15  *define objective function
+  16  Objective.. z =E= 4*x1 + 3*x2;
+  17   
+  18  *define the constraints
+  19  Const1.. x1 + x2 =L= 40;
+  20  Const2.. 2*x1 + x2 =L= 60;
+  21   
+  22  *solving stage
+  23  model S4Problem1 /all/;
+  24   
+  25  solve S4Problem1 using LP maximizing z;
+
+
+COMPILATION TIME     =        0.000 SECONDS      2 MB  40.3.0 f227c22a LEX-LEG
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 20:09:06 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE S4Problem1 Using LP From line 25
+
+
+---- Objective  =E=  
+
+Objective..  z - 4*x1 - 3*x2 =E= 0 ; (LHS = 0)
+     
+
+---- Const1  =L=  
+
+Const1..  x1 + x2 =L= 40 ; (LHS = 0)
+     
+
+---- Const2  =L=  
+
+Const2..  2*x1 + x2 =L= 60 ; (LHS = 0)
+     
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 20:09:06 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE S4Problem1 Using LP From line 25
+
+
+---- z  objective variable
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       Objective
+
+
+---- x1  deluxe belts
+
+x1
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -4       Objective
+        1       Const1
+        2       Const2
+
+
+---- x2  regular belts
+
+x2
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -3       Objective
+        1       Const1
+        1       Const2
+
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 20:09:06 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE S4Problem1 Using LP From line 25
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            3
+BLOCKS OF VARIABLES           3     SINGLE VARIABLES            3
+NON ZERO ELEMENTS             7
+
+
+GENERATION TIME      =        0.001 SECONDS      3 MB  40.3.0 f227c22a LEX-LEG
+GAMS 40.3.0  f227c22a Sep 16, 2022          LEX-LEG x86 64bit/Linux - 10/14/22 20:09:06 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE S4Problem1 Using LP From line 25
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   S4Problem1          OBJECTIVE  z
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  25
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              140.0000
+
+ RESOURCE USAGE, LIMIT          0.027 10000000000.000
+ ITERATION COUNT, LIMIT         2    2147483647
+--- GAMS/Cplex licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.0.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:          140.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU Objective           .              .              .             1.0000      
+---- EQU Const1            -INF           40.0000        40.0000         2.0000      
+---- EQU Const2            -INF           60.0000        60.0000         1.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF          140.0000        +INF             .          
+---- VAR x1                  .            20.0000        +INF             .          
+---- VAR x2                  .            20.0000        +INF             .          
+
+  z  objective variable
+  x1  deluxe belts
+  x2  regular belts
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.037 SECONDS      3 MB  40.3.0 f227c22a LEX-LEG
+
+
+USER: Course License                                 S220923|0002AO-GEN
+      Stiftung Uni Hildesheim, Betriebswirtschaft WirtschaftsinfDCE2400
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      /home/norman/Schreibtisch/GAMS/GamsJava/models/LinearProgramming.gms
+Output     /home/norman/Schreibtisch/GAMS/GamsJava/LinearProgramming/Example1/_gams_java_gjo1.lst
