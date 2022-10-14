@@ -1,10 +1,10 @@
 # Default ignored files
 /shelf/
-/*.xml
-../Warehouse/_gams*.gdx
-../Warehouse/*.pf
-../Warehouse/
-../GamsJava.iml
-./libraries
-./codeStyles
-../out
+/*.xml/
+../Warehouse/_gams*.gdx/
+../Warehouse/*.pf/
+../GamsJava.iml/
+./libraries/
+./codeStyles/
+../out/
+../models/*.log/
